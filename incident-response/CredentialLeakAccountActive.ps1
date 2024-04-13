@@ -15,17 +15,12 @@ function accountCheck($UPN) {
     if ($user -ne $null) {
         # Check if the account is enabled
         if ($user.Enabled -eq $true) {
-            Write-Host "Account: $($user.UserPrincipalName)"
-            Write-Host "Title: $($user.Title)"
-            Write-Host "Department: $($user.Department)"
-            Write-Host "Last Logon Date: $($user.LastLogonDate)"
-            Write-Host "Password Last Set: $(Get-Date $user.passwordLastSet -Format 'dd-MM-yyyy HH:mm:ss')"
-            Write-Host "Account Status: Enabled"
+            Export-Csv -Path .\EnabledAccounts.csv -NoTypeInformation
         } else {
-            Write-Host "The account is disabled."
+            Write-Host "The account is disabled: $($user.UserPrincipalName)"
         }
     } else {
-        Write-Host "The account was not found."
+        Write-Host "The account was not found: $($user.UserPrincipalName)"
     }
 }
 
